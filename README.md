@@ -4,9 +4,9 @@ Angular Directive for Easy Server-Side Image Cropping. Handles both original ima
 ## Options / Bindings
 ```html
     	<div image-crop 
-    		aspect-ratio="{string/string}" 
+    		aspect-ratio="{int}/{int}" 
     		img-src="{string}" 
-    		img-load="{string}" <!-- Image to display while loading change of resource --> 
+    		img-load="{string}"
     		display-height="{int}" 
     		display-width = "{int}"
     		scaled-height="{int}" 
@@ -14,5 +14,5 @@ Angular Directive for Easy Server-Side Image Cropping. Handles both original ima
     		scaled-top="{int}" 
     		scaled-left="{int}" 
     		style="position:relative;">
-		</div>
+	</div>
 ```
