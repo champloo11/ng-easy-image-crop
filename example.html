@@ -1,0 +1,36 @@
+<html ng-app="testImageCrop">
+	<head>
+		<title>Test Angular Image Crop</title>
+		<link rel="stylesheet" type="text/css" href="easyImageCrop/image-crop.css">
+    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	    <script src="exampleApp.js"></script>
+	    <script src="easyImageCrop/imageCrop.js"></script>
+	</head>
+	<body ng-controller="ImageCroppingCtrl">
+		<div class="models container-fluid">
+		    <div class="row-fluid">
+		    	<div image-crop 
+		    		aspect-ratio="aspectRatio" 
+		    		img-src="imgSrc" 
+		    		img-load="'imgLoader.gif'" 
+		    		display-height="displayHeight"
+		    		display-width = "displayWidth"
+		    		scaled-height="scaledHeight" 
+		    		scaled-width="scaledWidth" 
+		    		scaled-top="scaledTop" 
+		    		scaled-left="scaledLeft" 
+		    		style="max-width:1000px; width: 25%; position:relative;">
+				</div>
+
+				{{"Original Width: " + scaledWidth+"px"}}<br />
+				{{"Original Height: " + scaledHeight+"px"}}<br />
+
+				{{"Display Width: " + displayWidth+"px"}}<br />
+				{{"Display Height: " + displayHeight+"px"}}<br />
+				{{"Original X: " + scaledLeft + "px"}}<br />
+				{{"Original Y: " + scaledTop + "px"}}<br />
+				Ratio: <input ng-model="aspectRatio" type="text">
+		   </div>	
+		</div>
+	</body>
+</html>

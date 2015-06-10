@@ -1,0 +1,28 @@
+<img id="imageCropSource" ng-src="{{imgSrc}}">
+<div id="imageCropSelector" style="background: url('{{imgSrc}}');">
+	<div id="third_grid">
+		<!-- Third's rule grid -->
+		<div id="vertical_1"></div>
+		<div id="vertical_2"></div>
+		<div id="horizontal_1"></div>
+		<div id="horizontal_2"></div>
+
+		<!-- These are the resizing points on the div. -->
+		<div id="resize_top_left" class="imageCropResizePoint"></div>
+		<div id="resize_top_middle" class="imageCropResizePoint"></div>
+		<div id="resize_top_right" class="imageCropResizePoint"></div>
+		<div id="resize_middle_left" class="imageCropResizePoint"></div>
+		<div id="resize_middle_right" class="imageCropResizePoint"></div>
+		<div id="resize_bottom_left" class="imageCropResizePoint"></div>
+		<div id="resize_bottom_middle" class="imageCropResizePoint"></div>
+		<div id="resize_bottom_right" class="imageCropResizePoint"></div>
+		
+		<!-- The invisible bars that are used to resize the div -->
+		<div id="resize_top"></div>
+		<div id="resize_bottom"></div>
+		<div id="resize_right"></div>
+		<div id="resize_left"></div>
+	</div>
+</div>
+<div id="imageCropBlock"></div>
+<div id="cropToolLoading" ng-show="imgLoader"></div>
