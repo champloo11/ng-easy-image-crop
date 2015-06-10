@@ -1,9 +1,7 @@
 # ngEasyImageCrop
 Angular Directive for Easy Server-Side Image Cropping. Handles both original image and scaled image dimensions.
 
-## Demo 
-http://daemonfstudios.com/ngEasyImageCrop/example.html
-
+[Demo](http://daemonfstudios.com/ngEasyImageCrop/example.html)
 
 ## Options / Bindings
 ```html
