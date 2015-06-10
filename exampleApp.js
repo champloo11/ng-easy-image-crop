@@ -8,5 +8,5 @@ app.controller('ImageCroppingCtrl', ['$scope', function($scope){
 	$scope.scaledTop = 0;
 	$scope.scaledLeft = 0;
 	$scope.aspectRatio = "15/23";
-	$scope.imgSrc = "http://sbsinternational.org/wp-content/uploads/2015/02/Beautiful.jpg";
+	$scope.imgSrc = "http://upload.wikimedia.org/wikipedia/commons/0/08/Mount_Everest_by_Kerem_Barut.jpg";
 }]);
