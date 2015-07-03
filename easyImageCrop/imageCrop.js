@@ -186,7 +186,7 @@ app.directive('imageCrop', [function($compile){
 				$element[0].children[2].style.backgroundColor = "rgba(0,0,0,0.3)";
 			};
 
-			var horizontalScaling = function(xDelta, origin){
+			var horizontalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Left
 					rectangleWidth += xDelta;
 					rectangleLeft -= xDelta;
@@ -219,7 +219,7 @@ app.directive('imageCrop', [function($compile){
 
 			};
 
-			var verticalScaling = function(yDelta, origin){
+			var verticalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Top
 					rectangleHeight += yDelta;
 					rectangleTop -= yDelta;
@@ -255,25 +255,25 @@ app.directive('imageCrop', [function($compile){
 			// Origin starts at top-left and rotates clockwise.
 			var diagonalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Top-left
-					horizontalScaling(xDelta, 0);
-					verticalScaling(yDelta, 0);
+					horizontalScaling(xDelta, yDelta, 0);
+					verticalScaling(xDelta, yDelta, 0);
 				} else if(origin === 1){ // Top-right
-					verticalScaling(yDelta, 0);
+					verticalScaling(xDelta, yDelta, 0);
 
 					if(!$scope.aspectRatio){
-						horizontalScaling(xDelta, 1);
+						horizontalScaling(xDelta, yDelta, 1);
 					}
 				} else if (origin === 2) { // Bottom-right
-					verticalScaling(yDelta, 1);
+					verticalScaling(xDelta, yDelta, 1);
 
 					if(!$scope.aspectRatio){
-						horizontalScaling(xDelta, 1);
+						horizontalScaling(xDelta, yDelta, 1);
 					}
 				} else if(origin === 3){ // Bottom-left
-					horizontalScaling(xDelta, 0);
+					horizontalScaling(xDelta, yDelta, 0);
 				
 					if(!$scope.aspectRatio){
-						verticalScaling(yDelta, 1);
+						verticalScaling(xDelta, yDelta, 1);
 					}
 				}
 
@@ -391,8 +391,6 @@ app.directive('imageCrop', [function($compile){
 			   	// Move the correct part of the background image into the view/
 			   	imageCropSelectorDiv.style.backgroundPosition =  "-"+(rectangleLeft+1)+"px" + " -"+(rectangleTop+1)+"px";
 			   	imageCropSelectorDiv.style.backgroundSize = imageTag.offsetWidth+"px";
-			   	imageCropSelectorDiv.style.backgroundRepeat = "no-repeat";
-
 
 				// Set the top and left position of the div. 
 			    imageCropSelectorDiv.style.left = rectangleLeft+"px";
@@ -431,6 +429,10 @@ app.directive('imageCrop', [function($compile){
 			   	originalDragX = newDragX;
 			    originalDragY = newDragY;
 			    drawRectangle();
+			}
+
+			function stopTranslation(){
+				resizingRectangle = false;
 			}
 
 			function stopResizing(){
@@ -582,6 +584,11 @@ app.directive('imageCrop', [function($compile){
 					resetBackgroundColor();
 				}
 			});
+
+
+
+			// TODO (maybe): Loop through an array of string values, and generate this dynamically. 
+			// Won't look as atrocious or require as many repeated lines of code.
 
 			// Diagonal Scaling - Blagh.
 			$window.document.getElementById("resize_top_left").addEventListener("mousedown", function(e){
