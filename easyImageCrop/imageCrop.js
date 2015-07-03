@@ -18,13 +18,19 @@ app.directive('imageCrop', [function($compile){
 
 			// Representation of Crop DIV.
 			var rectangleLeft;
+			var rectangleRight;
 			var rectangleTop;
 			var rectangleWidth;
 			var rectangleHeight;
 			var focusedOnCrop = false;
+			var ratioValues;
+			var offset;
+
+
 
 			// DOM For Manipulatable Elements.
 			var imageCropSelectorDiv = $window.document.getElementById("imageCropSelector");
+			var imageCropSelect;
 			var imageTag; // Any interaction with this should verify that the elemented has loaded.
 
 			// Translation
@@ -62,8 +68,10 @@ app.directive('imageCrop', [function($compile){
 				if(newValue){
 					if(newValue !== oldValue && newValue.split("/").length == 2){
 						ratioValues = newValue.split("/");
-						aspectRatioX = ratioValues[0];
-						aspectRatioY = ratioValues[1];
+						if(ratioValues.length == 2){
+							aspectRatioX = ratioValues[0];
+							aspectRatioY = ratioValues[1];
+						}
 
 						horizontalScaling(0,0,0);
 
@@ -114,7 +122,7 @@ app.directive('imageCrop', [function($compile){
 							$scope.originalImageHeight = this.height;
 
 							$scope.scaleFactor = this.width / imageTag.offsetWidth;
-						}
+						};
 
 						originalImage.src = imageTag.src;
 					};
@@ -142,7 +150,7 @@ app.directive('imageCrop', [function($compile){
 
 					$scope.scaleFactor = this.width / imageTag.offsetWidth;
 
-				}
+				};
 
 				originalImage.src = imageTag.src;
 			};
@@ -158,7 +166,7 @@ app.directive('imageCrop', [function($compile){
 					} else {
 						mouseXRelative = e.pageX - offset.left;
 					}
-			}
+			};
 
 			var calculateMouseYRelative = function(e){
 					if(scrollTop){
@@ -166,7 +174,7 @@ app.directive('imageCrop', [function($compile){
 				    } else {
 				    	mouseYRelative = e.pageY - offset.top;
 				    }
-			}
+			};
 
 			var resetBackgroundColor = function(){
 				imageCropSelectorDiv.style.display = "none";
@@ -178,7 +186,7 @@ app.directive('imageCrop', [function($compile){
 				$element[0].children[2].style.backgroundColor = "rgba(0,0,0,0.3)";
 			};
 
-			var horizontalScaling = function(xDelta, yDelta, origin){
+			var horizontalScaling = function(xDelta, origin){
 				if(origin === 0){ // Left
 					rectangleWidth += xDelta;
 					rectangleLeft -= xDelta;
@@ -209,9 +217,9 @@ app.directive('imageCrop', [function($compile){
 			   		rectangleHeight = rectangleWidth * (aspectRatioY/aspectRatioX);
 				}
 
-			}
+			};
 
-			var verticalScaling = function(xDelta, yDelta, origin){
+			var verticalScaling = function(yDelta, origin){
 				if(origin === 0){ // Top
 					rectangleHeight += yDelta;
 					rectangleTop -= yDelta;
@@ -241,36 +249,36 @@ app.directive('imageCrop', [function($compile){
 
 			   		rectangleWidth = rectangleHeight* (aspectRatioX/aspectRatioY);
 				}
-			}
+			};
 
 
 			// Origin starts at top-left and rotates clockwise.
 			var diagonalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Top-left
-					horizontalScaling(xDelta, yDelta, 0);
-					verticalScaling(xDelta, yDelta, 0);
+					horizontalScaling(xDelta, 0);
+					verticalScaling(yDelta, 0);
 				} else if(origin === 1){ // Top-right
-					verticalScaling(xDelta, yDelta, 0);
+					verticalScaling(yDelta, 0);
 
 					if(!$scope.aspectRatio){
-						horizontalScaling(xDelta, yDelta, 1);
+						horizontalScaling(xDelta, 1);
 					}
 				} else if (origin === 2) { // Bottom-right
-					verticalScaling(xDelta, yDelta, 1);
+					verticalScaling(yDelta, 1);
 
 					if(!$scope.aspectRatio){
-						horizontalScaling(xDelta, yDelta, 1);
+						horizontalScaling(xDelta, 1);
 					}
 				} else if(origin === 3){ // Bottom-left
-					horizontalScaling(xDelta, yDelta, 0);
+					horizontalScaling(xDelta, 0);
 				
 					if(!$scope.aspectRatio){
-						verticalScaling(xDelta, yDelta, 1);
+						verticalScaling(yDelta, 1);
 					}
 				}
 
 				drawRectangle();
-			}
+			};
 
 
 			var translate = function(xDelta, yDelta){
@@ -290,7 +298,7 @@ app.directive('imageCrop', [function($compile){
 				} else if(rectangleTop - yDelta + rectangleHeight > imageTag.offsetHeight){
 					rectangleTop = imageTag.offsetHeight - rectangleHeight;
 				}
-			}
+			};
 
 			function resetInteractions(){
 		        draggingRectangle = false;
@@ -299,6 +307,10 @@ app.directive('imageCrop', [function($compile){
 
 
 			function calculateRectangleDimensions(mouseX, mouseY, oldMouseX, oldMouseY){
+				var tempHolder; 
+				var width;
+				var height;
+
 				if(mouseX < oldMouseX){
 					tempHolder = mouseX;
 					mouseX = oldMouseX;
@@ -322,7 +334,7 @@ app.directive('imageCrop', [function($compile){
 				}
 
 			    if($scope.aspectRatio){
-			   		height = width * (aspectRatioY/aspectRatioX)
+			   		height = width * (aspectRatioY/aspectRatioX);
 				} else {
 					height = mouseY - oldMouseY;
 				}
@@ -370,10 +382,10 @@ app.directive('imageCrop', [function($compile){
 				}
 			};
 
-			var onScrollFunction = function(e){
+			var onScrollFunction = function(){
 			    scrollLeft = ($window.pageXOffset || $window.document.scrollLeft) - ($window.document.clientLeft || 0);
 			    scrollTop = ($window.pageYOffset || $window.document.scrollTop)  - ($window.document.clientTop || 0);
-			}
+			};
 
 			function drawRectangle(){
 			   	// Move the correct part of the background image into the view/
@@ -408,6 +420,9 @@ app.directive('imageCrop', [function($compile){
 			}
 
 			function midTranslation(e){
+				var newDragX;
+				var newDragY;
+
 				newDragX = e.pageX;
 			    newDragY = e.pageY;
 			    translate(originalDragX - newDragX, originalDragY - newDragY);
@@ -416,15 +431,14 @@ app.directive('imageCrop', [function($compile){
 			    drawRectangle();
 			}
 
-			function stopTranslation(e){
-				resizingRectangle = false;
-			}
-
-			function stopResizing(e){
+			function stopResizing(){
 			    resizingRectangle = false;
 			}
 
 			function midResizing(e){
+				var currentResizeMouseX;
+				var currentResizeMouseY;
+
 				e.preventDefault();
 				e.stopPropagation();
 				currentResizeMouseX = e.pageX;
@@ -516,7 +530,7 @@ app.directive('imageCrop', [function($compile){
 				}
 			});
 
-			$element[0].children[2].addEventListener("mouseup", function(e){
+			$element[0].children[2].addEventListener("mouseup", function(){
  				resetInteractions();
 			});
 
@@ -561,16 +575,11 @@ app.directive('imageCrop', [function($compile){
 				}
 			});			
 
-			$element[0].children[2].addEventListener("dblclick", function(e){
+			$element[0].children[2].addEventListener("dblclick", function(){
 				if(!draggingRectangle && !resizingRectangle && !mouseModifyingRectangle){
 					resetBackgroundColor();
 				}
 			});
-
-
-
-			// TODO (maybe): Loop through an array of string values, and generate this dynamically. 
-			// Won't look as atrocious or require as many repeated lines of code.
 
 			// Diagonal Scaling - Blagh.
 			$window.document.getElementById("resize_top_left").addEventListener("mousedown", function(e){
