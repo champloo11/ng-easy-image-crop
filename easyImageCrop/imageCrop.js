@@ -79,6 +79,7 @@ app.directive('imageCrop', [function($compile){
 			// Handle a change in the image we are cropping.
 			$scope.$watch("imgSrc", function(newValue, oldValue){
 				if(newValue !== oldValue){
+					imageCropSelect.style.backgroundImage = newValue;
 
 					// There are a lot of default values that we need to reset.
 					$window.document.getElementById("cropToolLoading").style.display= "block";
@@ -630,4 +631,4 @@ app.directive('imageCrop', [function($compile){
 
 		}]
 	};
-}]);
+}]); 
