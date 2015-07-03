@@ -391,6 +391,7 @@ app.directive('imageCrop', [function($compile){
 			   	// Move the correct part of the background image into the view/
 			   	imageCropSelectorDiv.style.backgroundPosition =  "-"+(rectangleLeft+1)+"px" + " -"+(rectangleTop+1)+"px";
 			   	imageCropSelectorDiv.style.backgroundSize = imageTag.offsetWidth+"px";
+			   	imageCropSelectorDiv.style.backgroundRepeat = "no-repeat";
 
 				// Set the top and left position of the div. 
 			    imageCropSelectorDiv.style.left = rectangleLeft+"px";
