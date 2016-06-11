@@ -265,7 +265,9 @@ app.directive('imageCrop', [function($compile){
 			var diagonalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Top-left
 					rectangleWidth += xDelta;
-					rectangleLeft -= xDelta;
+					if(rectangleWidth > 0 || (rectangleWidth <= 0 && xDelta > 0) ){
+						rectangleLeft -= xDelta;
+					}
 
 					if(rectangleWidth < 0){
 						rectangleWidth = 0;
