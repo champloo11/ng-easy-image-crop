@@ -264,8 +264,41 @@ app.directive('imageCrop', [function($compile){
 			// Origin starts at top-left and rotates clockwise.
 			var diagonalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Top-left
-					horizontalScaling(xDelta, yDelta, 0);
-					verticalScaling(xDelta, yDelta, 0);
+					rectangleWidth += xDelta;
+					rectangleLeft -= xDelta;
+
+					if(rectangleWidth < 0){
+						rectangleWidth = 0;
+					}
+
+					if(rectangleLeft < 0){
+						rectangleLeft = 0;
+					}
+
+					if(rectangleWidth + rectangleLeft > imageTag.offsetWidth){
+						rectangleWidth = imageTag.offsetWidth - rectangleLeft;
+					}
+
+					if($scope.aspectRatio){
+
+					    if(rectangleWidth * (aspectRatioY/aspectRatioX) + rectangleTop > imageTag.offsetHeight){
+							rectangleWidth = (imageTag.offsetHeight - rectangleTop) / (aspectRatioY/aspectRatioX);
+						}
+
+	 			   		var newRectangleHeight = rectangleWidth * (aspectRatioY/aspectRatioX);
+					   	var heightDelta = rectangleHeight - newRectangleHeight;
+						rectangleTop += heightDelta;
+
+						if(rectangleTop < 0){
+							rectangleTop = 0;
+						}
+						rectangleHeight = newRectangleHeight;
+
+ 					} else {
+
+ 						rectangleTop -= yDelta;
+ 						rectangleHeight += yDelta;
+ 					}
 				} else if(origin === 1){ // Top-right
 					verticalScaling(xDelta, yDelta, 0);
 
