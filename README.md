@@ -21,3 +21,27 @@ Angular Directive for Easy Server-Side Image Cropping. Handles both original ima
 		style="position:relative;">
 	</div>
 ```
+
+- aspect-ratio
+ - A string of two integers split by a '/'. Representing a ratio to enforce on the crop-box.
+
+- img-src
+ - The URL pointing to the image to be cropped.
+
+- img-load
+ - A load icon to display while the image is loading. 
+
+- display-height 
+ - The height of the crop-box inside of the directive. **Not scaled to the original image height**.
+
+- display-width
+ - The width of the crop-box inside of the directive. **Not scaled to the original image width**. 
+
+- scaled-height
+ - The height of the crop-box relative to the original image dimensions. **Scaled to original image dimensions**
+
+- scaled-width
+ - The width of the crop-box relative to the original image dimensions. **Scaled to original image dimensions**
+
+- scaled-top / scaled-left 
+  - The top-left point of the crop box. Relative to the original image dimensions. 
