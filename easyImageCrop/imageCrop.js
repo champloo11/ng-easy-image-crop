@@ -149,7 +149,6 @@ app.directive('imageCrop', [function($compile){
 					$scope.originalImageHeight = this.height;
 
 					$scope.scaleFactor = this.width / imageTag.offsetWidth;
-
 				};
 
 				originalImage.src = imageTag.src;
@@ -189,7 +188,11 @@ app.directive('imageCrop', [function($compile){
 			var horizontalScaling = function(xDelta, yDelta, origin){
 				if(origin === 0){ // Left
 					rectangleWidth += xDelta;
-					rectangleLeft -= xDelta;
+
+					if(rectangleWidth >= 0){
+						rectangleLeft -= xDelta;
+					}
+
 				} else { // Right
 					rectangleWidth -= xDelta;
 				}
@@ -220,9 +223,15 @@ app.directive('imageCrop', [function($compile){
 			};
 
 			var verticalScaling = function(xDelta, yDelta, origin){
+
+
 				if(origin === 0){ // Top
 					rectangleHeight += yDelta;
-					rectangleTop -= yDelta;
+
+					if(rectangleHeight >= 0){
+						rectangleTop -= yDelta;
+					}
+
 				} else { // Bottom
 					rectangleHeight -= yDelta;
 				}
