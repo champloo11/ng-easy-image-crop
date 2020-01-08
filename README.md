@@ -1,5 +1,11 @@
 # Angular Easy Image Crop
-Angular Directive for Easy Server-Side Image Cropping. Handles both original image and scaled image dimensions. With additional support for dynamic aspect-ratio cropping. 
+Angular directive for selecting an area within an image to crop. Useful for gathering rectangular data (represented as topLeftX, topLeftY, width, height). 
+
+# Supports:
+
+- Original image dimensions
+- Scaled image dimensions 
+- Dynamic/configurable aspect-ratio crop area 
 
 ## Options / Bindings
 ```html
