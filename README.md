@@ -1,7 +1,7 @@
 # Angular Easy Image Crop
 Angular directive for selecting an area within an image to crop. Useful for gathering rectangular data (represented as topLeftX, topLeftY, width, height). 
 
-# Supports:
+# Supports
 
 - Original image dimensions
 - Scaled image dimensions 
